@@ -1,0 +1,30 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+
+        // IronSource
+        maven { url 'https://android-sdk.is.com/' }
+
+        // Pangle
+        maven { url 'https://artifact.bytedance.com/repository/pangle' }
+
+        // Tapjoy
+        maven { url "https://sdk.tapjoy.com/" }
+
+        // Mintegral
+        maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea"}
+    }
+}
+rootProject.name = "english"
+include ":app"

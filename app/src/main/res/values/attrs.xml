@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RussianSearchView">
+        <attr name="inputVoiceEnabled" format="boolean"/>
+        <attr name="inputLabel" format="string"/>
+        <attr name="inputHint" format="string"/>
+        <attr name="inputText" format="string"/>
+        <attr name="android:inputType" format="integer"/>
+        <attr name="android:lines" format="integer"/>
+        <attr name="inputClearable" format="boolean"/>
+        <attr name="inputShowBackButton" format="boolean"/>
+        <attr name="android:focusable" format="boolean"/>
+    </declare-styleable>
+</resources>

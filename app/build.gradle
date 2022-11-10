@@ -1,0 +1,109 @@
+plugins {
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "kotlin-kapt"
+    id "com.google.dagger.hilt.android"
+}
+
+android {
+    compileSdk 32
+
+    signingConfigs{
+        release{
+            storeFile file("../key.jks")
+            storePassword "Anvar4660"
+            keyAlias "loving"
+            keyPassword "Anvar4660"
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.kuvandikov.russian"
+        minSdk 23
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        signingConfig signingConfigs.debug
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    // Test
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // Core
+    implementation 'androidx.core:core-ktx:1.8.0'
+
+    // Appcompat
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+
+    // Lifecycle
+    def lifecycle_version = "2.5.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    // Material Design Components
+    implementation 'com.google.android.material:material:1.6.1'
+
+    // UI Components
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Navigation
+    def nav_version = "2.4.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // ViewBindingPropertyDelegate | | To use only without reflection variants of viewBinding
+    implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6"
+
+    // YandexMobileAds SDK
+    implementation "com.yandex.android:mobileads:5.3.0"
+
+    // AlphabetIndex Fast Scroll RecyclerView
+    implementation "io.github.l4digital:fastscroll:2.1.0"
+//    implementation "com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.95"
+
+    // Room database
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Retrofit 2
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // OkHttp
+    def okHttp_version = "5.0.0-alpha.9"
+    implementation "com.squareup.okhttp3:okhttp-bom:$okHttp_version"
+    implementation "com.squareup.okhttp3:okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor"
+
+    // Hilt
+    def hilt_version = "2.42"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+}

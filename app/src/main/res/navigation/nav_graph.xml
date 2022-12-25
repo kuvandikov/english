@@ -21,6 +21,11 @@
         app:destination="@id/detailsFragment"
         app:launchSingleTop="true" />
 
+    <action
+        android:id="@+id/action_global_detailsDialog"
+        app:destination="@id/detailsDialog"
+        app:launchSingleTop="true" />
+
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.kuvandikov.english.presentation.ui.fragments.main.MainFragment"
@@ -44,6 +49,16 @@
             app:nullable="true" />
 
     </fragment>
+
+    <dialog android:id="@+id/detailsDialog"
+        android:name="com.kuvandikov.english.presentation.ui.dialogs.DetailsDialog"
+        android:label="dialog_details"
+        tools:layout="@layout/dialog_details"
+        >
+        <argument android:name="word"
+            app:argType="com.kuvandikov.english.presentation.ui.model.Word"
+            app:nullable="true" />
+    </dialog>
 
 
 </navigation>

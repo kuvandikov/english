@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_saved"
-        android:name="com.kuvandikov.english.presentation.ui.fragments.main.history.SavedFragment"
+        android:name="com.kuvandikov.english.presentation.ui.fragments.main.saved.SavedFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_saved" />
 

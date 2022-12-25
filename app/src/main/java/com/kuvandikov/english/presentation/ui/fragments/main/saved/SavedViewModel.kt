@@ -1,4 +1,4 @@
-package com.kuvandikov.english.presentation.ui.fragments.main.history
+package com.kuvandikov.english.presentation.ui.fragments.main.saved
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

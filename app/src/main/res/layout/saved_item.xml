@@ -6,14 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/divider_top"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#999999"
-        android:layout_marginEnd="36dp"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <LinearLayout
         android:id="@+id/word_layout"
         android:layout_width="0dp"
@@ -23,10 +15,10 @@
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/remember"
+        app:layout_constraintBottom_toTopOf="@+id/divider_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/remove_saved"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider_top">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/word"
@@ -45,18 +37,28 @@
 
     </LinearLayout>
 
+
     <ImageButton
-        android:id="@+id/remember"
+        android:id="@+id/remove_saved"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:src="@drawable/icon_bookmark"
-        android:background="?android:colorBackground"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="8dp"
         android:padding="8dp"
+        android:src="@drawable/icon_cross"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:tint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/light_grey" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#999999"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.kuvandikov.english.R
+import com.kuvandikov.english.databinding.SavedItemBinding
 import com.kuvandikov.english.databinding.WordItemBinding
 import com.kuvandikov.english.presentation.ui.model.Word
 import com.l4digital.fastscroll.FastScroller
@@ -22,6 +23,7 @@ class WordsAdapter(var viewType: Int = DEFAULT_VIEW_TYPE) : RecyclerView.Adapter
 
     private var mItems: MutableList<Word> = mutableListOf()
 
+    var click: ((Word) -> Unit)? = null
     var clickFavorite: ((Word) -> Unit)? = null
     var clickRemoveSaved: ((Word) -> Unit)? = null
 
@@ -29,10 +31,16 @@ class WordsAdapter(var viewType: Int = DEFAULT_VIEW_TYPE) : RecyclerView.Adapter
     override fun getItemViewType(position: Int) = viewType
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val itemBinding = WordItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return when(viewType){
-            0 -> Holder(itemBinding,clickFavorite)
-            else -> SavedHolder(itemBinding,clickRemoveSaved)
+            0 -> {
+                val itemBinding = WordItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                Holder(itemBinding,clickFavorite)
+            }
+            else -> {
+                val itemBinding = SavedItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                SavedHolder(itemBinding,clickRemoveSaved)
+            }
         }
     }
 
@@ -40,7 +48,7 @@ class WordsAdapter(var viewType: Int = DEFAULT_VIEW_TYPE) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
             is Holder-> holder.bind(mItems[position],position != 0)
-            is SavedHolder-> holder.bind(mItems[position],position != 0)
+            is SavedHolder-> holder.bind(mItems[position])
         }
     }
 
@@ -60,37 +68,41 @@ class WordsAdapter(var viewType: Int = DEFAULT_VIEW_TYPE) : RecyclerView.Adapter
             itemBinding.dividerTop.isVisible = dividerTopIsVisible
             itemBinding.word.text = item.word
             itemBinding.description.text = item.description
-            itemBinding.remember.isVisible = true
-            itemBinding.removeSaved.isVisible = false
             when (item.isFavourite) {
                 true -> itemBinding.remember.setColorFilter(ContextCompat.getColor(itemBinding.root.context,
-                    R.color.blue), android.graphics.PorterDuff.Mode.SRC_IN);
+                    R.color.blue), android.graphics.PorterDuff.Mode.SRC_IN)
                 else -> itemBinding.remember.setColorFilter(ContextCompat.getColor(itemBinding.root.context,
-                    R.color.light_grey), android.graphics.PorterDuff.Mode.SRC_IN);
+                    R.color.light_grey), android.graphics.PorterDuff.Mode.SRC_IN)
             }
 
             itemBinding.remember.setOnClickListener {
                 clickFavorite?.invoke(item)
             }
+
+            itemBinding.wordLayout.setOnClickListener {
+                click?.invoke(item)
+            }
         }
     }
 
     inner class SavedHolder(
-        private val itemBinding: WordItemBinding,
+        private val itemBinding: SavedItemBinding,
         var clickRemoveSaved: ((Word) -> Unit)?,
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
-        fun bind(item: Word, dividerTopIsVisible: Boolean) {
+        fun bind(item: Word) {
 
-            itemBinding.dividerTop.isVisible = dividerTopIsVisible
             itemBinding.word.text = item.word
             itemBinding.description.text = item.description
-            itemBinding.remember.isVisible = false
             itemBinding.removeSaved.isVisible = true
 
             itemBinding.removeSaved.setOnClickListener {
                 Log.d("TAG", "bind: setOnClickListener")
                 clickRemoveSaved?.invoke(item)
+            }
+
+            itemBinding.wordLayout.setOnClickListener {
+                click?.invoke(item)
             }
         }
     }

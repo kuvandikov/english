@@ -16,6 +16,8 @@ import com.kuvandikov.english.presentation.base.BaseFragment
 import com.kuvandikov.english.presentation.extensions.activityNavController
 import com.kuvandikov.english.presentation.extensions.navigateSafely
 import com.kuvandikov.english.presentation.ui.adapters.WordsAdapter
+import com.kuvandikov.english.presentation.ui.dialogs.DetailsDialog
+import com.kuvandikov.english.presentation.ui.dialogs.DetailsDialogDirections
 import com.kuvandikov.english.presentation.ui.fragments.details.DetailsFragment
 import com.kuvandikov.english.presentation.ui.fragments.details.DetailsFragmentDirections
 import com.yandex.mobile.ads.banner.AdSize
@@ -125,13 +127,23 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             startActivityForResult(intent, SPEECH_REQUEST_CODE)
         }
 
+        adapter.click = {word ->
+            //val action = DetailsFragmentDirections.actionGlobalDetailsFragment(word)
+            val action = DetailsDialogDirections.actionGlobalDetailsDialog(word)
+            activityNavController().navigateSafely(action)
+        }
+
         adapter.clickFavorite = { word->
             viewModel.setFavorite(word)
         }
 
         similarWordsAdapter.clickFavorite = { word->
-//            viewModel.setFavorite(word)
-            val action = DetailsFragmentDirections.actionGlobalDetailsFragment(word)
+            viewModel.setFavorite(word)
+        }
+
+        similarWordsAdapter.click = {word ->
+            //val action = DetailsFragmentDirections.actionGlobalDetailsFragment(word)
+            val action = DetailsDialogDirections.actionGlobalDetailsDialog(word)
             activityNavController().navigateSafely(action)
         }
     }

@@ -28,8 +28,14 @@ import java.util.*
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
 
+//    private val sharedViewModel: OrderViewModel by activityViewModels()
     private val viewModel: HomeViewModel by viewModels()
+
     private val binding by viewBinding(FragmentHomeBinding::bind)
+
+    private val adapter = WordsAdapter()
+    private val similarWordsAdapter = WordsAdapter()
+
 
     val TAG = "TAG"
 
@@ -37,7 +43,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     override fun initialize() {
 
         binding.list.layoutManager = LinearLayoutManager(this.context)
+        binding.list.adapter = adapter
+
         binding.listSimilar.layoutManager = LinearLayoutManager(this.context)
+        binding.listSimilar.adapter = similarWordsAdapter
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.initData()
+        }
 
         initAds()
     }
@@ -64,25 +77,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
         lifecycleScope.launchWhenStarted {
             viewModel.list.collectLatest {
-                val adapter = WordsAdapter(it)
-                binding.list.adapter = adapter
-                adapter.clickFavorite = { word->
-                    word.isFavourite = !word.isFavourite
-                    adapter.notifyDataSetChanged()
-                    viewModel.setFavorite(word)
-                }
+                Log.d(TAG, "setupSubscribers: ${it.size}")
+                adapter.updateItems(it)
             }
         }
 
         lifecycleScope.launchWhenStarted {
-            viewModel.filter_result.collectLatest {
-                val adapter = WordsAdapter(it)
-                binding.listSimilar.adapter = adapter
-                adapter.clickFavorite = { word->
-                    word.isFavourite = !word.isFavourite
-                    adapter.notifyDataSetChanged()
-                    viewModel.setFavorite(word)
-                }
+            viewModel.filterResult.collectLatest {
+                similarWordsAdapter.updateItems(it)
             }
         }
 
@@ -97,13 +99,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     override fun setupListeners() {
         binding.searchBoxContainer.searchEditText.doOnTextChanged { text, _, _, _ ->
-            val query = text.toString().toLowerCase(Locale.getDefault())
+            val query = text.toString().lowercase(Locale.getDefault())
             viewModel.filterWithQuery(query)
         }
 
         binding.searchBoxContainer.clearSearchQuery.setOnClickListener {
             binding.searchBoxContainer.searchEditText.setText("")
         }
+
         binding.searchBoxContainer.voiceSearchQuery.setOnClickListener {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                 putExtra(
@@ -112,10 +115,18 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                 )
                 putExtra(
                     RecognizerIntent.EXTRA_LANGUAGE,
-                    "ru-RU"
+                    "en-Uk"
                 )
             }
             startActivityForResult(intent, SPEECH_REQUEST_CODE)
+        }
+
+        adapter.clickFavorite = { word->
+            viewModel.setFavorite(word)
+        }
+
+        similarWordsAdapter.clickFavorite = { word->
+            viewModel.setFavorite(word)
         }
     }
 

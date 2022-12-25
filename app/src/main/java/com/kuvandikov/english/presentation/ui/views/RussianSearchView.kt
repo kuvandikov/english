@@ -1,6 +1,7 @@
 package com.kuvandikov.english.presentation.ui.views
 
 import android.content.Context
+import android.graphics.Rect
 import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log

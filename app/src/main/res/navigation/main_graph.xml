@@ -12,16 +12,16 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_history"
-        android:name="com.kuvandikov.english.presentation.ui.fragments.main.history.HistoryFragment"
+        android:id="@+id/navigation_saved"
+        android:name="com.kuvandikov.english.presentation.ui.fragments.main.history.SavedFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_saved" />
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.kuvandikov.english.presentation.ui.fragments.main.profile.ProfileFragment"
+        android:name="com.kuvandikov.english.presentation.ui.fragments.main.settings.SettingsFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_settings" />
 
 
 </navigation>

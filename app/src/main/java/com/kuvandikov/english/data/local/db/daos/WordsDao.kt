@@ -12,6 +12,9 @@ interface WordsDao {
     @Query("SELECT * from Words")
     fun get(): MutableList<WordsEntity>
 
+    @Query("SELECT * from Words where is_favourite == 1")
+    fun getSaved(): MutableList<WordsEntity>
+
     @Query("SELECT * from Words WHERE word LIKE :search_query || '%'")
     fun search(search_query: String): MutableList<WordsEntity>
 

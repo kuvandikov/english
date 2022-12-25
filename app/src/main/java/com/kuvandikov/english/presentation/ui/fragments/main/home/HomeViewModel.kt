@@ -1,15 +1,19 @@
 package com.kuvandikov.english.presentation.ui.fragments.main.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kuvandikov.english.data.local.db.daos.WordsDao
 import com.kuvandikov.english.presentation.ui.model.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 
 @HiltViewModel
@@ -33,34 +37,31 @@ class HomeViewModel @Inject constructor(
     private val _list = MutableStateFlow<MutableList<Word>>(mutableListOf())
     val list: StateFlow<MutableList<Word>> = _list
 
-    private val _filter_result = MutableStateFlow<MutableList<Word>>(mutableListOf())
-    val filter_result: StateFlow<MutableList<Word>> = _filter_result
+    private val _filterResult = MutableStateFlow<MutableList<Word>>(mutableListOf())
+    val filterResult: StateFlow<MutableList<Word>> = _filterResult
+
+    private var _query = "".lowercase(Locale.getDefault())
 
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = dao.get().map {
-                Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite)
-            }
-            _list.value = result.toMutableList()
-            _filter_result.value = result.toMutableList()
-        }
 
+    fun initData(){
+        filterWithQuery(_query)
     }
 
     fun filterWithQuery(query: String) {
+        _query = query
         viewModelScope.launch(Dispatchers.IO) {
-            if (query.isNotEmpty()) {
-                _filter_result.value = dao.search(query).map {
+            if (_query.isNotEmpty()) {
+                _filterResult.value = dao.search(query).map {
                     Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite)
                 }.toMutableList()
                 _layoutSimilarVisibility.value = true
                 _layoutWordsVisibility.value = false
                 _clearOrVoiceQueryVisibility.value = true
 
-                _noSearchResultsFoundTextVisibility.value = _filter_result.value.isEmpty()
-            } else if (query.isEmpty()) {
-                _filter_result.value = dao.get().map {
+                _noSearchResultsFoundTextVisibility.value = _filterResult.value.isEmpty()
+            } else if (_query.isEmpty()) {
+                _list.value = dao.get().map {
                     Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite)
                 }.toMutableList()
                 _layoutSimilarVisibility.value = false
@@ -71,9 +72,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setFavorite(word: Word){
+    fun setFavorite(word: Word) {
         viewModelScope.launch(Dispatchers.IO) {
-            dao.save(word.toEntity())
+
+            _filterResult.value = _filterResult.value.map {
+                if (it.id == word.id) it.copy(isFavourite = !word.isFavourite)
+                else it
+            }.toMutableList()
+
+            _list.value = _list.value.map {
+                if (it.id == word.id) it.copy(isFavourite = !word.isFavourite)
+                else it
+            }.toMutableList()
+
+
+            dao.save(word.copy(isFavourite = !word.isFavourite).toEntity())
         }
     }
 }

@@ -1,8 +1,14 @@
 <resources>
-    <string name="app_name">English</string>
+    <string name="app_name">Английский-русский словарь</string>
     <string name="home">Главная</string>
-    <string name="history">История</string>
+    <string name="saved">Сохраненные</string>
     <string name="settings">Настройки</string>
     <string name="search">Поиск</string>
     <string name="no_search_results_found">Результатов поиска не найдено</string>
+    <string name="saved_not_found">Сохраненные не найдено</string>
+    <string name="app_version">Версия: %1$s</string>
+    <string name="things_i_have_to_say_russian">Мы разработали эту программу с надеждой, что она будет полезна для вас. Мы не эксперта по английский языку. Если у вас возникли сложности или вы хотите предложит свое мнение, то напишите нам через обратную связь. Нравится приложение?  Оцените его и поделить с друзьями. Напишите, что вы о нем думаете.</string>
+    <string name="rate_the_app">Оцените приложение</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="share_to_friends">Поделиться с друзьями</string>
 </resources>

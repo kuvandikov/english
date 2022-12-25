@@ -11,4 +11,6 @@
     <string name="rate_the_app">Оцените приложение</string>
     <string name="feedback">Обратная связь</string>
     <string name="share_to_friends">Поделиться с друзьями</string>
+    <string name="details">Подробности</string>
+    <string name="back">Назад</string>
 </resources>

@@ -13,7 +13,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kuvandikov.english.R
 import com.kuvandikov.english.databinding.FragmentHomeBinding
 import com.kuvandikov.english.presentation.base.BaseFragment
+import com.kuvandikov.english.presentation.extensions.activityNavController
+import com.kuvandikov.english.presentation.extensions.navigateSafely
 import com.kuvandikov.english.presentation.ui.adapters.WordsAdapter
+import com.kuvandikov.english.presentation.ui.fragments.details.DetailsFragment
+import com.kuvandikov.english.presentation.ui.fragments.details.DetailsFragmentDirections
 import com.yandex.mobile.ads.banner.AdSize
 import com.yandex.mobile.ads.banner.BannerAdEventListener
 import com.yandex.mobile.ads.common.AdRequest
@@ -126,7 +130,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         }
 
         similarWordsAdapter.clickFavorite = { word->
-            viewModel.setFavorite(word)
+//            viewModel.setFavorite(word)
+            val action = DetailsFragmentDirections.actionGlobalDetailsFragment(word)
+            activityNavController().navigateSafely(action)
         }
     }
 

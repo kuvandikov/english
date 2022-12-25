@@ -15,6 +15,12 @@
         app:destination="@id/mainFragment"
         app:popUpTo="@id/nav_graph" />
 
+
+    <action
+        android:id="@+id/action_global_detailsFragment"
+        app:destination="@id/detailsFragment"
+        app:launchSingleTop="true" />
+
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.kuvandikov.english.presentation.ui.fragments.main.MainFragment"
@@ -26,6 +32,18 @@
         android:name="com.kuvandikov.english.presentation.ui.fragments.sign.SignFragment"
         android:label="flow_fragment_sign"
         tools:layout="@layout/fragment_sign" />
+
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.kuvandikov.english.presentation.ui.fragments.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <argument android:name="word"
+            app:argType="com.kuvandikov.english.presentation.ui.model.Word"
+            app:nullable="true" />
+
+    </fragment>
 
 
 </navigation>

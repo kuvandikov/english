@@ -3,6 +3,9 @@ plugins {
     id "org.jetbrains.kotlin.android"
     id "kotlin-kapt"
     id "com.google.dagger.hilt.android"
+    // Navigation Safe Args
+    id "androidx.navigation.safeargs.kotlin"
+    id "kotlin-parcelize"
 }
 
 android {
@@ -18,7 +21,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.kuvandikov.russian"
+        applicationId "com.kuvandikov.english"
         minSdk 23
         targetSdk 33
         versionCode 1

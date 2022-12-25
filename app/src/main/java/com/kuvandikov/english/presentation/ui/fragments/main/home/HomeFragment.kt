@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.speech.RecognizerIntent
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -108,6 +111,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             val query = text.toString().lowercase(Locale.getDefault())
             viewModel.filterWithQuery(query)
         }
+
+        binding.searchBoxContainer.searchEditText.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || keyEvent?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                hideKeyboard()
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
         binding.searchBoxContainer.clearSearchQuery.setOnClickListener {
             binding.searchBoxContainer.searchEditText.setText("")

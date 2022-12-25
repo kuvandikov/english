@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.kuvandikov.english.presentation.extensions.hideKeyboard
 
 abstract class BaseFragment(
     @LayoutRes layoutId: Int
@@ -29,4 +30,8 @@ abstract class BaseFragment(
 
     }
 
+
+    fun hideKeyboard(){
+        requireView().hideKeyboard()
+    }
 }

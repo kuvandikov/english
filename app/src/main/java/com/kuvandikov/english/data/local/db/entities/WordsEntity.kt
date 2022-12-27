@@ -22,5 +22,5 @@ class WordsEntity (
     val frequency: Long?,
 
     @ColumnInfo(name = "is_favourite")
-    val isFavourite: Boolean
+    var isFavourite: Boolean
 )

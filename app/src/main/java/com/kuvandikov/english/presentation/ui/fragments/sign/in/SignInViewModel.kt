@@ -25,7 +25,7 @@ class SignInViewModel  @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _list.value = dao.get().map {
-                Word(it.id?:0,it.word?:"",it.description)
+                Word(it.id?:0,it.word?:"",it.description, canBeAudio = it.audio != null)
             }.toMutableList()
         }
 

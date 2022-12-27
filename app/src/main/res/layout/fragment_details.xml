@@ -106,10 +106,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/icon_play_circle"
-                        android:minWidth="40dp"
-                        android:minHeight="40dp"
-                        />
+                        android:padding="8dp"
+                        android:src="@drawable/icon_play_circle"
+                        android:background="?attr/selectableItemBackgroundBorderless"/>
+                    <!--<ImageButton
+                        android:id="@+id/remove_saved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:src="@drawable/icon_cross"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        app:tint="@color/black"-->
 
                 </LinearLayout>
 

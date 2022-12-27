@@ -28,7 +28,7 @@ class SavedViewModel @Inject constructor(
     fun initData(){
         viewModelScope.launch(Dispatchers.IO) {
             val result = dao.getSaved().map {
-                Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite)
+                Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite,canBeAudio = it.audio != null)
             }
             _list.value = result.toMutableList()
 
@@ -39,7 +39,11 @@ class SavedViewModel @Inject constructor(
     fun removeSaved(word: Word) {
         viewModelScope.launch(Dispatchers.IO) {
             _list.value = _list.value.filter { it.id != word.id }.toMutableList()
-            dao.save(word.copy(isFavourite = !word.isFavourite).toEntity())
+
+            val wordEntity = dao.getById(word.id)
+            wordEntity.isFavourite = !word.isFavourite
+            dao.save(wordEntity)
+
             _noFoundTextVisibility.value = _list.value.isEmpty()
         }
     }

@@ -12,15 +12,5 @@ data class Word(
     val word: String,
     val description: String? = null,
     var isFavourite: Boolean = false,
-): Parcelable {
-    fun toEntity(): WordsEntity {
-        return WordsEntity(
-            id = id,
-            word = word,
-            description = description,
-            audio = null,
-            frequency = null,
-            isFavourite = isFavourite
-        )
-    }
-}
+    val canBeAudio: Boolean,
+): Parcelable

@@ -53,7 +53,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             if (_query.isNotEmpty()) {
                 _filterResult.value = dao.search(query).map {
-                    Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite)
+                    Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite, canBeAudio = it.audio != null)
                 }.toMutableList()
                 _layoutSimilarVisibility.value = true
                 _layoutWordsVisibility.value = false
@@ -62,7 +62,7 @@ class HomeViewModel @Inject constructor(
                 _noSearchResultsFoundTextVisibility.value = _filterResult.value.isEmpty()
             } else if (_query.isEmpty()) {
                 _list.value = dao.get().map {
-                    Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite)
+                    Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite,canBeAudio = it.audio != null)
                 }.toMutableList()
                 _layoutSimilarVisibility.value = false
                 _layoutWordsVisibility.value = true
@@ -85,8 +85,10 @@ class HomeViewModel @Inject constructor(
                 else it
             }.toMutableList()
 
+            val wordEntity = dao.getById(word.id)
+            wordEntity.isFavourite = !word.isFavourite
 
-            dao.save(word.copy(isFavourite = !word.isFavourite).toEntity())
+            dao.save(wordEntity)
         }
     }
 }

@@ -2,16 +2,21 @@ package com.kuvandikov.english.presentation.ui.fragments.main.settings
 
 import android.content.Intent
 import android.net.Uri
+import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kuvandikov.english.BuildConfig
 import com.kuvandikov.english.R
 import com.kuvandikov.english.databinding.FragmentSettingsBinding
 import com.kuvandikov.english.presentation.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private val binding by viewBinding(FragmentSettingsBinding::bind)
+
+    private val viewModel: SettingsViewModel by viewModels()
 
 
     override fun initialize() {
@@ -24,11 +29,11 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.rateTheApp.setOnClickListener {
             try {
                 val playStoreIntent = Intent(Intent.ACTION_VIEW)
-                playStoreIntent.data =
-                    Uri.parse("https://play.google.com/store/apps/details?id=uz.loving.math_battle")
+                playStoreIntent.data = Uri.parse("https://play.google.com/store/apps/details?id=uz.loving.math_battle")
                 startActivity(playStoreIntent)
+                viewModel.firebaseRateTheAppEvent()
             } catch (e: Exception) {
-
+                viewModel.firebaseRateTheAppEvent(e.message)
             }
         }
 
@@ -51,8 +56,9 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                     "https://play.google.com/store/apps/details?id=uz.loving.math_battle")
                 sendIntent.type = "text/plain"
                 startActivity(sendIntent)
+                viewModel.firebaseShareToFriendsEvent()
             } catch (e: Exception) {
-
+                viewModel.firebaseShareToFriendsEvent(e.message)
             }
 
         }

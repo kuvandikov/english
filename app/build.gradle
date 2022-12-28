@@ -6,6 +6,8 @@ plugins {
     // Navigation Safe Args
     id "androidx.navigation.safeargs.kotlin"
     id "kotlin-parcelize"
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -109,4 +111,10 @@ dependencies {
     def hilt_version = "2.42"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // Firebase-analytics
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
+
+    // Firebase-crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.2'
 }

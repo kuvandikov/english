@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "353016609470",
+    "project_id": "english-russian-dictiona-25018",
+    "storage_bucket": "english-russian-dictiona-25018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353016609470:android:76a95441d10d792316bcef",
+        "android_client_info": {
+          "package_name": "com.kuvandikov.english"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353016609470-pv6lt5lqfbnfqlc68kpraqv48pd1rpmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kuvandikov.english",
+            "certificate_hash": "e7fecc390db2c7c626311c4392c807e0c39bd85c"
+          }
+        },
+        {
+          "client_id": "353016609470-5aedg67mr5fhmuk7lfa10o6592dmop88.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANVFHYEv45gidH1QqihTU_UU86PRQxbjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353016609470-5aedg67mr5fhmuk7lfa10o6592dmop88.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

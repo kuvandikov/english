@@ -1,24 +1,25 @@
 package com.kuvandikov.english.presentation.ui.fragments.main.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.kuvandikov.english.data.local.db.daos.WordsDao
+import com.kuvandikov.english.presentation.extensions.logSearch
+import com.kuvandikov.english.presentation.extensions.logSetFavorite
 import com.kuvandikov.english.presentation.ui.model.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val dao: WordsDao,
+    private val mFirebaseAnalytics: FirebaseAnalytics
 ) : ViewModel() {
 
     private val _noSearchResultsFoundTextVisibility = MutableStateFlow<Boolean>(false)
@@ -52,6 +53,7 @@ class HomeViewModel @Inject constructor(
         _query = query
         viewModelScope.launch(Dispatchers.IO) {
             if (_query.isNotEmpty()) {
+                mFirebaseAnalytics.logSearch(query)
                 _filterResult.value = dao.search(query).map {
                     Word(it.id ?: 0, it.word ?: "", it.description,it.isFavourite, canBeAudio = it.audio != null)
                 }.toMutableList()
@@ -74,7 +76,7 @@ class HomeViewModel @Inject constructor(
 
     fun setFavorite(word: Word) {
         viewModelScope.launch(Dispatchers.IO) {
-
+            mFirebaseAnalytics.logSetFavorite(word.copy(isFavourite = !word.isFavourite))
             _filterResult.value = _filterResult.value.map {
                 if (it.id == word.id) it.copy(isFavourite = !word.isFavourite)
                 else it

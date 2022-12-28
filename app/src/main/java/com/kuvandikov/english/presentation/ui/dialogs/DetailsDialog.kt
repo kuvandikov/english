@@ -32,6 +32,7 @@ class DetailsDialog :  BaseDialog<DialogDetailsBinding>(R.layout.dialog_details)
             binding.tvWord.text = word
             binding.tvDescription.text = description
             binding.imagePlayButton.isVisible = canBeAudio
+            viewModel.firebaseWordDialogOpenEvent(this)
         }
 
     }
@@ -39,11 +40,14 @@ class DetailsDialog :  BaseDialog<DialogDetailsBinding>(R.layout.dialog_details)
 
     override fun setupListeners() = with(binding){
         imagePlayButton.setOnClickListener {
-            if (word == null) return@setOnClickListener
-            val path = "${context!!.cacheDir}/${word!!.word}.mp3"
+            if (word == null) {
+                viewModel.firebasePlayAudioWordNullEvent()
+                return@setOnClickListener
+            }
+            val path = "${context!!.cacheDir}/audio.mp3"
 
             Log.d("TAG", "setupListeners: $path")
-            viewModel.playAudio(word!!.id,path)
+            viewModel.playAudio(word!!,path)
         }
 
         closeButton.setOnClickListener {

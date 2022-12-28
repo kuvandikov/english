@@ -2,7 +2,9 @@ package com.kuvandikov.english.presentation.ui.fragments.main.saved
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.kuvandikov.english.data.local.db.daos.WordsDao
+import com.kuvandikov.english.presentation.extensions.logSetFavorite
 import com.kuvandikov.english.presentation.ui.model.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SavedViewModel @Inject constructor(
     private val dao: WordsDao,
+    private val mFirebaseAnalytics: FirebaseAnalytics
 ) : ViewModel() {
 
     private val _noFoundTextVisibility = MutableStateFlow<Boolean>(false)
@@ -38,6 +41,7 @@ class SavedViewModel @Inject constructor(
 
     fun removeSaved(word: Word) {
         viewModelScope.launch(Dispatchers.IO) {
+            mFirebaseAnalytics.logSetFavorite(word.copy(isFavourite = !word.isFavourite))
             _list.value = _list.value.filter { it.id != word.id }.toMutableList()
 
             val wordEntity = dao.getById(word.id)

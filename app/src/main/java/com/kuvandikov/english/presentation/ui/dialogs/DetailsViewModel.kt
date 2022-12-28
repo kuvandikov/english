@@ -7,12 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.kuvandikov.english.R
 import com.kuvandikov.english.data.local.db.daos.WordsDao
 import com.kuvandikov.english.databinding.FragmentDetailsBinding
 import com.kuvandikov.english.presentation.base.BaseFragment
+import com.kuvandikov.english.presentation.extensions.logOpenWordDialog
+import com.kuvandikov.english.presentation.extensions.logPlayAudioWord
+import com.kuvandikov.english.presentation.extensions.logPlayAudioWordIOException
+import com.kuvandikov.english.presentation.extensions.logPlayAudioWordNull
 import com.kuvandikov.english.presentation.ui.fragments.main.home.HomeViewModel
 import com.kuvandikov.english.presentation.ui.model.Word
+import com.yandex.mobile.ads.impl.id
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,18 +33,25 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val dao: WordsDao,
+    private val mFirebaseAnalytics: FirebaseAnalytics
 ) : ViewModel() {
 
     private val mediaPlayer = MediaPlayer()
 
+    fun firebaseWordDialogOpenEvent(word: Word){
+        viewModelScope.launch(Dispatchers.IO) {
+            mFirebaseAnalytics.logOpenWordDialog(word)
+        }
+    }
 
 
-    fun playAudio(id: Long, path: String) {
+
+    fun playAudio(word: Word, path: String) {
 
         viewModelScope.launch(Dispatchers.IO) {
             mediaPlayer.reset()
-            val word = dao.getById(id)
-            val audioByteArray = word.audio ?: return@launch
+            val wordEntity = dao.getById(word.id)
+            val audioByteArray = wordEntity.audio ?: return@launch
 
             try {
                 val audioFile = File(path)
@@ -50,12 +63,27 @@ class DetailsViewModel @Inject constructor(
                 mediaPlayer.setDataSource(path)
                 mediaPlayer.prepare()
                 mediaPlayer.start()
+                mFirebaseAnalytics.logPlayAudioWord(word)
                 Log.d("TAG", "playAudio: ")
 
             } catch (e: IOException) {
+                firebasePlayAudioIOExceptionEvent(word)
                 Log.d("TAG", "playAudio: ${e.message}")
             }
         }
     }
+
+    private fun firebasePlayAudioIOExceptionEvent(word: Word){
+        viewModelScope.launch(Dispatchers.IO) {
+            mFirebaseAnalytics.logPlayAudioWordIOException(word)
+        }
+    }
+
+    fun firebasePlayAudioWordNullEvent(){
+        viewModelScope.launch(Dispatchers.IO) {
+            mFirebaseAnalytics.logPlayAudioWordNull()
+        }
+    }
+
 
 }

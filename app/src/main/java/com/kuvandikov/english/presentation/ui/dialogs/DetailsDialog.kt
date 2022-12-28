@@ -45,6 +45,10 @@ class DetailsDialog :  BaseDialog<DialogDetailsBinding>(R.layout.dialog_details)
             Log.d("TAG", "setupListeners: $path")
             viewModel.playAudio(word!!.id,path)
         }
+
+        closeButton.setOnClickListener {
+            dismiss()
+        }
     }
 
 

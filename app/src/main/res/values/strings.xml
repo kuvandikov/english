@@ -13,4 +13,6 @@
     <string name="share_to_friends">Поделиться с друзьями</string>
     <string name="details">Подробности</string>
     <string name="back">Назад</string>
+    <string name="close">Закрыть</string>
+
 </resources>

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.kuvandikov.english.data.local.db.daos.WordsDao
+import com.kuvandikov.english.data.local.preferences.PreferencesHelper
 import com.kuvandikov.english.presentation.extensions.logSetFavorite
 import com.kuvandikov.english.presentation.ui.model.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SavedViewModel @Inject constructor(
     private val dao: WordsDao,
-    private val mFirebaseAnalytics: FirebaseAnalytics
+    private val mFirebaseAnalytics: FirebaseAnalytics,
+    private val preferencesHelper: PreferencesHelper
 ) : ViewModel() {
 
     private val _noFoundTextVisibility = MutableStateFlow<Boolean>(false)
@@ -25,6 +27,14 @@ class SavedViewModel @Inject constructor(
 
     private val _list = MutableStateFlow<MutableList<Word>>(mutableListOf())
     val list: StateFlow<MutableList<Word>> = _list
+
+    private val _unitId = MutableStateFlow<String?>(null)
+    val unitId: StateFlow<String?> = _unitId
+
+
+    init {
+        _unitId.value = preferencesHelper.getSavedUnitId()
+    }
 
 
 

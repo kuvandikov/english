@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_blue"
@@ -59,12 +60,6 @@
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:visibility="gone" />
     </LinearLayout>
-
-    <com.yandex.mobile.ads.banner.BannerAdView
-        android:id="@+id/banner_ad_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"/>
 
 
 </FrameLayout>

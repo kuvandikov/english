@@ -2,24 +2,15 @@ package com.kuvandikov.english.presentation.ui.dialogs
 
 import android.media.MediaPlayer
 import android.util.Log
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.navArgs
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.kuvandikov.english.R
 import com.kuvandikov.english.data.local.db.daos.WordsDao
-import com.kuvandikov.english.databinding.FragmentDetailsBinding
-import com.kuvandikov.english.presentation.base.BaseFragment
 import com.kuvandikov.english.presentation.extensions.logOpenWordDialog
 import com.kuvandikov.english.presentation.extensions.logPlayAudioWord
 import com.kuvandikov.english.presentation.extensions.logPlayAudioWordIOException
 import com.kuvandikov.english.presentation.extensions.logPlayAudioWordNull
-import com.kuvandikov.english.presentation.ui.fragments.main.home.HomeViewModel
 import com.kuvandikov.english.presentation.ui.model.Word
-import com.yandex.mobile.ads.impl.id
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +18,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import javax.inject.Inject
-
 
 
 @HiltViewModel

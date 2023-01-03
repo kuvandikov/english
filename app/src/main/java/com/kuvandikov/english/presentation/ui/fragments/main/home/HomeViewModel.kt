@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.kuvandikov.english.data.local.db.daos.WordsDao
+import com.kuvandikov.english.data.local.preferences.PreferencesHelper
 import com.kuvandikov.english.presentation.extensions.logSearch
 import com.kuvandikov.english.presentation.extensions.logSetFavorite
 import com.kuvandikov.english.presentation.ui.model.Word
@@ -19,8 +20,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val dao: WordsDao,
-    private val mFirebaseAnalytics: FirebaseAnalytics
+    private val mFirebaseAnalytics: FirebaseAnalytics,
+    private val preferencesHelper: PreferencesHelper
 ) : ViewModel() {
+
+    private val _unitId = MutableStateFlow<String?>(null)
+    val unitId: StateFlow<String?> = _unitId
 
     private val _noSearchResultsFoundTextVisibility = MutableStateFlow<Boolean>(false)
     val noSearchResultsFoundTextVisibility: StateFlow<Boolean> = _noSearchResultsFoundTextVisibility
@@ -42,6 +47,11 @@ class HomeViewModel @Inject constructor(
     val filterResult: StateFlow<MutableList<Word>> = _filterResult
 
     private var _query = "".lowercase(Locale.getDefault())
+
+
+    init {
+        _unitId.value = preferencesHelper.getHomeUnitId()
+    }
 
 
 

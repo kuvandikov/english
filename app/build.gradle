@@ -84,8 +84,8 @@ dependencies {
     // ViewBindingPropertyDelegate | | To use only without reflection variants of viewBinding
     implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6"
 
-    // YandexMobileAds SDK
-    implementation "com.yandex.android:mobileads:5.3.0"
+    /*// YandexMobileAds SDK
+    implementation "com.yandex.android:mobileads:5.3.0"*/
 
     // AlphabetIndex Fast Scroll RecyclerView
     implementation "io.github.l4digital:fastscroll:2.1.0"
@@ -117,4 +117,7 @@ dependencies {
 
     // Firebase-crashlytics
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.2'
+
+    // AdMob
+    implementation 'com.google.android.gms:play-services-ads:21.4.0'
 }

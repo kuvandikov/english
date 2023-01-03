@@ -4,8 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.speech.RecognizerIntent
 import android.util.Log
+import android.view.Gravity
 import android.view.KeyEvent
+import android.view.ViewGroup.LayoutParams
 import android.view.inputmethod.EditorInfo
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -13,21 +16,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.kuvandikov.english.R
 import com.kuvandikov.english.databinding.FragmentHomeBinding
 import com.kuvandikov.english.presentation.base.BaseFragment
 import com.kuvandikov.english.presentation.extensions.activityNavController
 import com.kuvandikov.english.presentation.extensions.navigateSafely
 import com.kuvandikov.english.presentation.ui.adapters.WordsAdapter
-import com.kuvandikov.english.presentation.ui.dialogs.DetailsDialog
 import com.kuvandikov.english.presentation.ui.dialogs.DetailsDialogDirections
-import com.kuvandikov.english.presentation.ui.fragments.details.DetailsFragment
-import com.kuvandikov.english.presentation.ui.fragments.details.DetailsFragmentDirections
-import com.yandex.mobile.ads.banner.AdSize
-import com.yandex.mobile.ads.banner.BannerAdEventListener
-import com.yandex.mobile.ads.common.AdRequest
-import com.yandex.mobile.ads.common.AdRequestError
-import com.yandex.mobile.ads.common.ImpressionData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import java.util.*
@@ -61,7 +60,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             viewModel.initData()
         }
 
-        initAds()
     }
 
     override fun setupSubscribers() {
@@ -101,6 +99,12 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         lifecycleScope.launchWhenStarted {
             viewModel.noSearchResultsFoundTextVisibility.collectLatest {
                 binding.noSearchResultsFoundText.isVisible = it
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.unitId.collectLatest {
+                if (!it.isNullOrEmpty()) initAds(it)
             }
         }
 
@@ -159,7 +163,30 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         }
     }
 
-    private fun initAds() {
+    private fun initAds(unitId: String) {
+
+
+        MobileAds.initialize(context!!) {}
+        val adView = AdView(context!!)
+
+        val params = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT)
+        params.gravity = Gravity.BOTTOM
+
+        adView.layoutParams = params
+
+        adView.setAdSize(AdSize.BANNER)
+
+        adView.adUnitId = unitId
+
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
+        binding.layout.addView(adView)
+
+    }
+
+    /*
+    private fun initYandexAds() {
         binding.bannerAdView.setAdUnitId("R-M-1947472-1")
 
 
@@ -197,6 +224,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
         binding.bannerAdView.loadAd(adRequest)
     }
+     */
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

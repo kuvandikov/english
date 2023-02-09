@@ -18,5 +18,5 @@ object PreferencesModule {
     @Provides
     fun providePreferencesHelper(
         @ApplicationContext context: Context
-    ) = PreferencesHelper(context)
+    ): PreferencesHelper = PreferencesHelper(context)
 }

@@ -59,7 +59,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             // https://t.me/ChatRussianUzbekDictionaryBot
             try {
                 val telegramIntent = Intent(Intent.ACTION_VIEW)
-                telegramIntent.data = Uri.parse("https://t.me/ChatRussianUzbekDictionaryBot")
+                telegramIntent.data = Uri.parse("https://t.me/ChatEnglishRussianDictionaryBot")
                 startActivity(telegramIntent)
             } catch (e: Exception) {
 
@@ -71,7 +71,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 val sendIntent = Intent()
                 sendIntent.action = Intent.ACTION_SEND
                 sendIntent.putExtra(Intent.EXTRA_TEXT,
-                    "https://play.google.com/store/apps/details?id=uz.loving.math_battle")
+                    "https://play.google.com/store/apps/details?id=com.kuvandikov.english")
                 sendIntent.type = "text/plain"
                 startActivity(sendIntent)
                 viewModel.firebaseShareToFriendsEvent()

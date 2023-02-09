@@ -56,28 +56,28 @@ android {
 dependencies {
 
     // Test
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation 'junit:junit:'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     // Core
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
 
     // Appcompat
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
 
     // Lifecycle
-    def lifecycle_version = "2.5.0"
+    def lifecycle_version = "2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
     // Material Design Components
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
 
     // UI Components
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // Navigation
-    def nav_version = "2.4.2"
+    def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
@@ -92,7 +92,7 @@ dependencies {
 //    implementation "com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.95"
 
     // Room database
-    def room_version = "2.4.2"
+    def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
@@ -108,7 +108,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor"
 
     // Hilt
-    def hilt_version = "2.42"
+    def hilt_version = "2.44.2"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
@@ -116,8 +116,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
 
     // Firebase-crashlytics
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.2'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.3'
 
     // AdMob
-    implementation 'com.google.android.gms:play-services-ads:21.4.0'
+    implementation 'com.google.android.gms:play-services-ads:21.5.0'
+
+    // Firebase-realtime-database
+    implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
 }

@@ -47,7 +47,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.rateTheApp.setOnClickListener {
             try {
                 val playStoreIntent = Intent(Intent.ACTION_VIEW)
-                playStoreIntent.data = Uri.parse("https://play.google.com/store/apps/details?id=uz.loving.math_battle")
+                playStoreIntent.data = Uri.parse("https://play.google.com/store/apps/details?id=com.kuvandikov.english")
                 startActivity(playStoreIntent)
                 viewModel.firebaseRateTheAppEvent()
             } catch (e: Exception) {

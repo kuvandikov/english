@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.google.firebase.BuildConfig
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import com.kuvandikov.english.BuildConfig
 import com.kuvandikov.english.R
 import com.kuvandikov.english.data.local.preferences.PreferencesHelper
 import com.kuvandikov.english.databinding.ActivityMainBinding
@@ -64,6 +64,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupFirebaseRealtimeDatabase(){
+        if (BuildConfig.DEBUG) return
+
         lifecycleScope.launch(Dispatchers.IO){
             firebaseDatabaseReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
